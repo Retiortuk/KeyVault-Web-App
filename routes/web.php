@@ -11,21 +11,21 @@ Route::get('/checkout/{:id}', function ($id) {
 })->name('checkout');
 
 // Admin Side
-Route::prefix('admin')->name('admin')->group(function () {
+Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('admin.dashboard');
     })->name('dashboard');
 
     Route::get('/games', function () {
-        return "Management page for games";
+        return view('admin.games.index');
     })->name('games.index');
 
     Route::get('/keys', function () {
-        return "Management page for game keys";
+        return view('admin.keys.index');
     })->name('keys.index');
 
     Route::get('/transactions', function () {
-        return "Management page for transactions";
+        return view('admin.transactions.index');
     })->name('transactions.index');
 });
