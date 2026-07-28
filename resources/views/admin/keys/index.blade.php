@@ -156,16 +156,4 @@
         </div>
     </div>
 </div>
-
-<script>
-    // Function for Modal Toggle
-    function toggleModal(modalID) {
-        const modal = document.getElementById(modalID);
-        if (modal.classList.contains('hidden')) {
-            modal.classList.remove('hidden');
-        } else {
-            modal.classList.add('hidden');
-        }
-    }
-</script>
 @endsection
