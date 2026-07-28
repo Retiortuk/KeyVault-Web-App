@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\GameController;
+use App\Http\Controllers\Admin\KeyController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,13 +19,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         return view('admin.dashboard');
     })->name('dashboard');
 
-    Route::get('/games', function () {
-        return view('admin.games.index');
-    })->name('games.index');
+    Route::resource('games', GameController::class)->except(['create', 'show', 'edit']);
 
-    Route::get('/keys', function () {
-        return view('admin.keys.index');
-    })->name('keys.index');
+    Route::resource('keys', KeyController::class)->only(['index', 'store', 'destroy']);
 
     Route::get('/transactions', function () {
         return view('admin.transactions.index');
