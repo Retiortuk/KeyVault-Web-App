@@ -3,10 +3,10 @@
 
 @section('content')
 <!-- Header Section -->
-<div class="mb-8 bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
-    <h2 class="text-3xl font-bold text-gray-900">Transaction History</h2>
-    <p class="text-gray-500 mt-1">Review and manage recent store purchases and key assignments.</p>
-</div>
+<x-admin.page-header
+    title="Transaction History"
+    subtitle="Monitor and track all customer purchase transactions."
+/>
 
 <!-- Main Table Card -->
 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
