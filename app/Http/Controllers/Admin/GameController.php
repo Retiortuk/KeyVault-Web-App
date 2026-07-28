@@ -14,7 +14,7 @@ class GameController extends Controller
     {
         $games = Game::withCount(['keys as stock' => function ($query) {
             $query->where('is_used', false);
-        }])->latest()->get();
+        }])->latest()->paginate(10);
 
         return view('admin.games.index', compact('games'));
     }
@@ -32,8 +32,7 @@ class GameController extends Controller
         $data = $request->except('image');
 
         if($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('public/images');
-            $data['image'] = Storage::url($imagePath);
+            $data['image'] = $request->file('image')->store('games', 'public');
         }
 
         Game::create($data);
