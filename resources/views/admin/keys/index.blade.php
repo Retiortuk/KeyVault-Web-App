@@ -3,17 +3,12 @@
 
 @section('content')
 <!-- Header Section -->
-<div class="mb-8 bg-white p-8 rounded-2xl border border-gray-100 shadow-sm flex justify-between items-center">
-    <div>
-        <h2 class="text-3xl font-bold text-gray-900">Key Management</h2>
-        <p class="text-gray-500 mt-1">Manage game license keys inventory and availability.</p>
-    </div>
-
-    <button onclick="toggleModal('modal-add-key')" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors shadow-md shadow-purple-200 flex items-center gap-2">
+<x-admin.page-header title="Key Management" subtitle="Manage game license keys inventory and availability.">
+    <button onclick="toggleModal('modal-add-key')" class="w-full md:w-auto bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors shadow-md shadow-purple-200 flex items-center justify-center gap-2">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
         Add New Keys
     </button>
-</div>
+</x-admin.page-header>
 
 <!-- Main Table Card -->
 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
