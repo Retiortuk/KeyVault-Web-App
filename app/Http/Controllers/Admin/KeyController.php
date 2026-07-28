@@ -3,26 +3,30 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\GameKey;
 use App\Models\Game;
-
+use App\Models\GameKey;
+use Illuminate\Http\Request;
 
 class KeyController extends Controller
 {
-    //
     public function index()
     {
-        $games = Game::select('id', 'title')->latest()->get();
+        $gamesWithKeys = Game::whereHas('keys')
+            ->withCount([
+                'keys as total_keys',
+                'keys as available_keys' => function ($query) {
+                    $query->where('is_used', false);
+                }
+            ])
+            ->with(['keys' => function ($query) {
+                $query->latest();
+            }])
+            ->latest()
+            ->paginate(10);
 
-        $inventory = Game::withCount([
-            'keys as total_keys',
-            'keys as available_keys' => function ($query) {
-                $query->where('is_used', false);
-            }
-        ])->having('total_keys', '>', 0)->get();
+        $allGames = Game::select('id', 'title')->orderBy('title')->get();
 
-        return view('admin.keys.index', compact('games', 'inventory'));
+        return view('admin.keys.index', compact('gamesWithKeys', 'allGames'));
     }
 
     public function store(Request $request)
@@ -34,25 +38,37 @@ class KeyController extends Controller
 
         $keysArray = explode("\n", str_replace("\r", "", $request->keys));
         $insertData = [];
+        $now = now();
 
         foreach ($keysArray as $key) {
             $cleanKey = trim($key);
 
-            if(!empty($cleanKey)) {
+            if (!empty($cleanKey)) {
                 $insertData[] = [
                     'game_id' => $request->game_id,
-                    'key' => $cleanKey,
+                    'license_key' => $cleanKey,
                     'is_used' => false,
-                    'created_at' => now(),
-                    'updated_at' => now(),
+                    'created_at' => $now,
+                    'updated_at' => $now,
                 ];
             }
         }
 
-        if(count($insertData) > 0) {
-            GameKey::insert($insertData);
+        if (count($insertData) > 0) {
+            foreach (array_chunk($insertData, 500) as $chunk) {
+                GameKey::insert($chunk);
+            }
+
+            return redirect()->route('admin.keys.index')->with('success', count($insertData) . ' License Keys successfully added!');
         }
 
-        return redirect()->route('admin.keys.index')->with('success', 'Keys added successfully.');
+        return redirect()->back()->with('error', 'no valid keys found.');
+    }
+
+    public function destroy(GameKey $key)
+    {
+        $key->delete();
+
+        return redirect()->route('admin.keys.index')->with('success', 'License Key successfully deleted!');
     }
 }
