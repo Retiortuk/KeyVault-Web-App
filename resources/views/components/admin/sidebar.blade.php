@@ -3,10 +3,10 @@
         <!-- Logo -->
         <div class="h-20 flex items-center px-8 border-b border-gray-50">
             <div class="flex items-center gap-2 text-purple-700">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 012 0 1 1 0 102 0 4 4 0 00-4-4z" clip-rule="evenodd"></path></svg>
+                <svg class="w-6 h-6" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#f78282" stroke="#f78282"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>game_controller [#794]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-220.000000, -4719.000000)" fill="#9810fa"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M168.169,4570 L166,4570 L166,4568 L168.169,4568 L169.169,4569 L168.169,4570 Z M170.588,4567.581 L170.583,4567.586 L168.997,4566 L165.997,4566 L164,4566 L164,4572 L165.997,4572 L168.997,4572 L172.003,4568.995 L170.588,4567.581 Z M182,4570 L179.831,4570 L178.831,4569 L179.831,4568 L182,4568 L182,4570 Z M182.003,4566 L179.003,4566 L175.997,4569.005 L177.412,4570.419 L177.417,4570.414 L179.003,4572 L182.003,4572 L184,4572 L184,4566 L182.003,4566 Z M175,4574.834 L175,4577 L173,4577 L173,4574.834 L174,4573.834 L175,4574.834 Z M172.583,4572.414 L172.587,4572.419 L171,4574.005 L171,4577.005 L171,4579 L177,4579 L177,4577.005 L177,4574.005 L173.996,4571 L172.583,4572.414 Z M173,4563.172 L173,4561 L175,4561 L175,4563.172 L174,4564.172 L173,4563.172 Z M175.422,4565.591 L175.416,4565.586 L177,4564 L177,4561 L177,4559 L171,4559 L171,4561 L171,4564 L174.006,4567.005 L175.422,4565.591 Z" id="game_controller-[#794]"> </path> </g> </g> </g> </g></svg>
                 <div>
                     <h1 class="font-bold text-xl leading-tight">KeyVault</h1>
-                    <p class="text-[0.6rem] font-semibold text-gray-400 tracking-widest uppercase">Enterprise Control</p>
+                    <p class="text-[0.6rem] font-semibold text-gray-400 tracking-widest uppercase">Game Enterprise</p>
                 </div>
             </div>
         </div>
@@ -33,9 +33,12 @@
 
     <!-- Bottom Actions -->
     <div class="p-4 border-t border-gray-100 space-y-2">
-        <a href="#" class="flex items-center gap-3 px-4 py-2 text-sm font-medium text-gray-500 rounded-xl hover:bg-red-50 hover:text-red-600">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-            Logout
-        </a>
+        <form action="{{ route('logout') }}" method="POST" class="w-full">
+            @csrf
+            <button type="submit" class="w-full flex items-center gap-3 px-4 py-2 text-sm font-medium text-gray-500 rounded-xl hover:bg-red-50 hover:text-red-600 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                Logout
+            </button>
+        </form>
     </div>
 </aside>
