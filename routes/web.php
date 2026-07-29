@@ -14,6 +14,13 @@ Route::get('/game/overview', function () {
 Route::get('/checkout', function () {
     return view('front.checkout');
 });
+Route::get('/checkout/success', function () {
+    $transaction = (object) [
+        'order_id' => 'ORD-12345678',
+        'key' => 'KVLT-9X2R-P4LQ-ZM92'
+    ];
+    return view('front.success', compact('transaction'));
+})->name('checkout.success');
 
 
 
