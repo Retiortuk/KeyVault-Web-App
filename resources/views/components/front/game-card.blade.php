@@ -1,6 +1,6 @@
 @props(['title', 'image', 'price', 'category', 'platform' => 'Steam'])
 
-<div class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] overflow-hidden flex flex-col group hover:shadow-xl hover:border-purple-200 transition-all duration-300 cursor-pointer h-full">
+<a href="/game/overview" class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] overflow-hidden flex flex-col group hover:shadow-xl hover:border-purple-200 transition-all duration-300 cursor-pointer h-full">
 
     <!-- Thumbnail -->
     <div class="relative w-full aspect-[4/3] overflow-hidden bg-gray-100">
@@ -16,7 +16,7 @@
     <div class="p-5 flex flex-col flex-grow bg-white">
         <h3 class="font-bold text-gray-900 text-lg mb-1.5 line-clamp-1 group-hover:text-purple-700 transition-colors">{{ $title }}</h3>
 
-        
+
 
         <div class="mt-auto flex justify-between items-center pt-3 border-t border-gray-50">
             <span class="text-sm font-bold text-gray-900">{{ $price }}</span>
@@ -24,4 +24,4 @@
         </div>
     </div>
 
-</div>
+</a>
