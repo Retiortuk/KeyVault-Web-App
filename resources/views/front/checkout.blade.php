@@ -17,7 +17,7 @@
             </a>
         </div>
 
-        <form action="/checkout/success" method="GET" class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <form action="/checkout/failed" method="GET" class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             @csrf
 
             <!-- Detail Form -->
