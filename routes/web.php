@@ -11,6 +11,9 @@ Route::get('/', function () {
 Route::get('/game/overview', function () {
     return view('front.game');
 });
+Route::get('/checkout', function () {
+    return view('front.checkout');
+});
 
 
 
