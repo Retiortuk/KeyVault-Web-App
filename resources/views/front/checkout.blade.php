@@ -11,13 +11,13 @@
                 <h1 class="text-3xl md:text-4xl font-black text-gray-900 tracking-tight">Secure Checkout</h1>
                 <p class="text-gray-500 mt-2 font-medium">Complete your purchase to receive your key instantly.</p>
             </div>
-            <a href="/game/overview" class="inline-flex items-center gap-2 text-sm font-bold text-purple-700 hover:text-purple-800 transition-colors group">
+            <a href="{{route('game.show', $game->id)}}" class="inline-flex items-center gap-2 text-sm font-bold text-purple-700 hover:text-purple-800 transition-colors group">
                 <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                 Return to Catalogue
             </a>
         </div>
 
-        <form action="/checkout/failed" method="GET" class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <form action="{{ route('checkout.process', $game->id) }}" method="POST" class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             @csrf
 
             <!-- Detail Form -->
@@ -74,16 +74,16 @@
                     <!-- Item Detail -->
                     <div class="flex items-center justify-between gap-4 pb-6 border-b border-gray-100">
                         <div class="flex items-center gap-4">
-                            <div class="w-14 h-14 bg-gray-100 rounded-xl overflow-hidden shrink-0 border border-gray-200">
-                                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=200" alt="title-game" class="w-full h-full object-cover">
+                            <div class="w-24 h-34 bg-gray-100 rounded-xl overflow-hidden shrink-0 border border-gray-200">
+                                <img src="{{ $game->image ? asset('storage/' . $game->image) : 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=200' }}" alt="title-game" class="w-full h-full object-cover">
                             </div>
                             <div>
-                                <h3 class="font-bold text-gray-900 text-sm md:text-base leading-tight">Assassin's Creed Blac Flag Resync</h3>
+                                <h3 class="font-bold text-gray-900 text-sm md:text-base leading-tight">{{$game->title}}</h3>
                                 <p class="text-xs text-gray-500 mt-0.5 font-medium">Global Steam Key</p>
                             </div>
                         </div>
                         <div class="font-bold text-gray-900 text-sm md:text-base whitespace-nowrap">
-                            Rp.499.000
+                            Rp {{ number_format($game->price, 0, ',', '.') }}
                         </div>
                     </div>
 
@@ -91,7 +91,7 @@
                     <div class="py-6 space-y-3 border-b border-gray-100">
                         <div class="flex justify-between items-center text-sm">
                             <span class="text-gray-500 font-medium">Subtotal</span>
-                            <span class="text-gray-900 font-semibold">Rp.499.000</span>
+                            <span class="text-gray-900 font-semibold">Rp {{ number_format($game->price, 0, ',', '.') }}</span>
                         </div>
                         <div class="flex justify-between items-center text-sm">
                             <span class="text-gray-500 font-medium">Service Fee</span>
@@ -102,7 +102,7 @@
                     <!-- Total -->
                     <div class="py-6 flex justify-between items-center">
                         <span class="text-lg font-bold text-gray-900">Total</span>
-                        <span class="text-2xl font-black text-purple-700 tracking-tight">Rp.499.000</span>
+                        <span class="text-2xl font-black text-purple-700 tracking-tight">Rp {{ number_format($game->price, 0, ',', '.') }}</span>
                     </div>
 
                     <!-- Submit Button -->

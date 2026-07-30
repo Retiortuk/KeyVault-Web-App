@@ -1,6 +1,6 @@
-@props(['title', 'image', 'price', 'category'])
+@props(['title', 'image', 'price', 'category', 'id'])
 
-<a href="/game/overview" class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] overflow-hidden flex flex-col group hover:shadow-xl hover:border-purple-200 transition-all duration-300 cursor-pointer h-full">
+<a href="{{ route('game.show', $id) }}" class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] overflow-hidden flex flex-col group hover:shadow-xl hover:border-purple-200 transition-all duration-300 cursor-pointer h-full">
 
     <!-- Thumbnail -->
     <div class="relative w-full aspect-[3/4] overflow-hidden bg-gray-100">

@@ -1,5 +1,5 @@
 @extends('layouts.front')
-@section('title', 'Game Title - KeyVault')
+@section('title', $game->title . ' - KeyVault')
 
 @section('content')
 <div class="bg-gray-50/50 h-full py-8 md:py-10">
@@ -15,10 +15,10 @@
         <div class="grid grid-cols-1 py-4 md:py-10 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
 
             <!--Game Cover Image -->
-            <div class="lg:col-span-7">
+            <div class="lg:col-span-5">
                 <div class="rounded-3xl overflow-hidden shadow-2xl border border-gray-100 bg-gray-200 aspect-[16/9] md:aspect-[4/3] lg:aspect-auto">
-                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200"
-                        alt="game cover image"
+                    <img src="{{ $game->image ? asset('storage/' . $game->image) : 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200' }}"
+                        alt="{{$game->title}}"
                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-700 ease-in-out">
                 </div>
             </div>
@@ -26,17 +26,27 @@
             <!--Product Details -->
             <div class="lg:col-span-5 flex flex-col h-full justify-center">
 
+                @if($game->stock > 0)
+                    <span class="inline-block bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-extrabold tracking-wider uppercase mb-4 w-max">
+                        In Stock ({{ $game->stock }})
+                    </span>
+                @else
+                    <span class="inline-block bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-extrabold tracking-wider uppercase mb-4 w-max">
+                        Out of Stock
+                    </span>
+                @endif
+
                 <!-- Title & Price -->
                 <h1 class="text-2xl md:text-5xl font-black text-gray-900 tracking-tight mb-2">
-                    Assassin's creed Black Flag Resync
+                    {{ $game->title }}
                 </h1>
                 <div class="text-2xl md:text-2xl font-black text-purple-700 mb-6 tracking-tighter">
-                    Rp 499.000
+                    Rp {{ number_format($game->price, 0, ',', '.') }}
                 </div>
 
                 <!-- Description -->
                 <p class="text-gray-600 md:py-5 py-5 leading-relaxed md:text-lg mb-8">
-                    Experience the thrill of the high seas in Assassin's Creed IV: Black Flag - Resync. Set sail on a journey through the golden age of piracy, where you'll encounter fierce battles, treacherous waters, and a world full of secrets waiting to be discovered.
+                    {{ $game->description }}
                 </p>
 
                 <!-- Game Details -->
@@ -59,10 +69,16 @@
 
                 <!-- CTA Button -->
                 <div class="mt-auto pt-4">
-                        <a href="/checkout" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-2xl shadow-lg shadow-purple-600/30 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3 text-lg">
+                    @if($game->stock > 0)
+                        <a href="{{ route('checkout', $game->id) }}" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-2xl shadow-lg shadow-purple-600/30 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3 text-lg">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                             Order Now
                         </a>
+                    @else
+                        <button disabled class="w-full bg-gray-300 text-gray-500 font-bold py-4 px-8 rounded-2xl cursor-not-allowed flex items-center justify-center gap-3 text-lg">
+                            Out of Stock
+                        </button>
+                    @endif
 
                     <div class="flex items-center justify-center gap-2 mt-4 text-sm font-medium text-gray-500">
                         <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>

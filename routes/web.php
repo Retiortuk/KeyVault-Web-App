@@ -8,13 +8,11 @@ use App\Http\Controllers\FrontController;
 
 Route::get('/',[FrontController::class, 'index'])->name('home');
 
-Route::get('/game/overview', function () {
-    return view('front.game');
-});
+Route::get('/game/overview/{id}', [FrontController::class, 'show'])->name('game.show');
 
-Route::get('/checkout', function () {
-    return view('front.checkout');
-});
+Route::get('/checkout/{id}', [FrontController::class, 'checkout'])->name('checkout');
+
+Route::post('/checkout/{id}', [FrontController::class, 'processCheckout'])->name('checkout.process');
 
 Route::get('/checkout/success', function () {
     $transaction = (object) [
