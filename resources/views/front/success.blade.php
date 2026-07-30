@@ -48,7 +48,7 @@
 
             <div class="bg-white rounded-xl border border-gray-200 p-1 flex justify-between items-center shadow-sm">
                 <!-- dynamic data's Controller -->
-                <input type="text" id="license-key" readonly value="{{ $transaction->key }}" class="w-full bg-transparent font-mono text-gray-800 font-bold tracking-[0.2em] text-sm md:text-base px-4 py-3 outline-none text-center selection:bg-purple-200">
+                <input type="text" id="license-key" readonly value="{{ $transaction->gameKey->license_key ?? 'Key not available' }}" class="w-full bg-transparent font-mono text-gray-800 font-bold tracking-[0.2em] text-sm md:text-base px-4 py-3 outline-none text-center selection:bg-purple-200">
 
                 <button id="copy-btn" class="shrink-0 p-3 bg-gray-50 hover:bg-purple-100 text-gray-500 hover:text-purple-700 rounded-lg transition-colors border border-gray-100 focus:ring-2 focus:ring-purple-500" title="Copy to clipboard">
                     <svg id="copy-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>

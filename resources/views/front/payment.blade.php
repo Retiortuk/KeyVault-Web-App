@@ -49,9 +49,9 @@
             window.snap.pay(snapToken, {
                 onSuccess: function(result) {
                     // Redirect jika pembayaran sukses (validasi aslinya tetap di Webhook)
-                    window.location.href = "{{ route('checkout.success') }}";
+                    window.location.href = "{{ route('checkout.success', $transaction->order_code) }}";
                 },
-                onPending: function(result) {s
+                onPending: function(result) {
                     alert("Awaiting your payment. Please complete the transaction.");
                 },
                 onError: function(result) {

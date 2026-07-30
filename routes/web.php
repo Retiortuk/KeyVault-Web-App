@@ -15,9 +15,7 @@ Route::get('/checkout/failed', function () {
     return view('front.failed');
 })->name('checkout.failed');
 
-Route::get('/checkout/success', function () {
-    return view('front.success');
-})->name('checkout.success');
+Route::get('/checkout/success/{order_code}', [TransactionController::class, 'success'])->name('checkout.success');
 
 
 Route::get('/checkout/{id}', [FrontController::class, 'checkout'])->name('checkout');

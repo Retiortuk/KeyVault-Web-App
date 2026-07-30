@@ -92,4 +92,32 @@ class TransactionController extends Controller
 
         return view('front.payment', compact('transaction'));
     }
+
+    public function success($orderCode)
+    {
+        $transaction = Transaction::with('gameKey')->where('order_code', $orderCode)->firstOrFail();
+
+        if($transaction->status === 'pending') {
+
+            $gameKey = \App\Models\GameKey::where('game_id', $transaction->game_id)
+                ->where('is_used', false)
+                ->first();
+
+            if($gameKey) {
+                $transaction->update([
+                    'status' => 'success',
+                    'game_key_id' => $gameKey->id,
+                ]);
+
+                $gameKey->update([
+                    'is_used' => true,
+                ]);
+
+                $transaction->load('gameKey');
+
+            }
+        }
+
+        return view('front.success', compact('transaction'));
+    }
 }
