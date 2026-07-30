@@ -44,7 +44,41 @@ document.addEventListener('DOMContentLoaded', () => {
         if(document.getElementById(id)) {
             setTimeout(() => {
                 window.closeToast(id);
-            }, 4000); 
+            }, 4000);
         }
     });
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const copyBtn = document.getElementById('copy-btn');
+
+    if (copyBtn) {
+        copyBtn.addEventListener('click', () => {
+            const keyInput = document.getElementById("license-key");
+            const copyIcon = document.getElementById("copy-icon");
+            const checkIcon = document.getElementById("check-icon");
+            const copyToast = document.getElementById("copy-toast");
+
+            keyInput.select();
+            keyInput.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(keyInput.value);
+
+            copyIcon.classList.add("hidden");
+            checkIcon.classList.remove("hidden");
+            copyBtn.classList.replace("bg-gray-50", "bg-green-100");
+            copyBtn.classList.replace("text-gray-500", "text-green-700");
+            copyToast.classList.replace("opacity-0", "opacity-100");
+
+            setTimeout(() => {
+                copyIcon.classList.remove("hidden");
+                checkIcon.classList.add("hidden");
+                copyBtn.classList.replace("bg-green-100", "bg-gray-50");
+                copyBtn.classList.replace("text-green-700", "text-gray-500");
+                copyToast.classList.replace("opacity-100", "opacity-0");
+            }, 2000);
+        });
+    }
+
 });
