@@ -1,14 +1,14 @@
-@props(['title', 'image', 'price', 'category', 'platform' => 'Steam'])
+@props(['title', 'image', 'price', 'category'])
 
 <a href="/game/overview" class="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] overflow-hidden flex flex-col group hover:shadow-xl hover:border-purple-200 transition-all duration-300 cursor-pointer h-full">
 
     <!-- Thumbnail -->
-    <div class="relative w-full aspect-[4/3] overflow-hidden bg-gray-100">
+    <div class="relative w-full aspect-[3/4] overflow-hidden bg-gray-100">
         <img src="{{ $image }}" alt="{{ $title }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out">
 
         <!-- Platform Badge -->
         <div class="absolute top-3 right-3 bg-white/95 backdrop-blur text-gray-800 text-[10px] font-bold px-2 py-1 rounded shadow-sm">
-            {{ $platform }}
+            PC/Steam
         </div>
     </div>
 
