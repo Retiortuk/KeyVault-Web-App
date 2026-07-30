@@ -5,28 +5,26 @@ use App\Http\Controllers\Admin\GameController;
 use App\Http\Controllers\Admin\KeyController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\TransactionController;
 
 Route::get('/',[FrontController::class, 'index'])->name('home');
 
 Route::get('/game/overview/{id}', [FrontController::class, 'show'])->name('game.show');
 
-Route::get('/checkout/{id}', [FrontController::class, 'checkout'])->name('checkout');
-
-Route::post('/checkout/{id}', [FrontController::class, 'processCheckout'])->name('checkout.process');
-
-Route::get('/checkout/success', function () {
-    $transaction = (object) [
-        'order_id' => 'ORD-12345678',
-        'key' => 'KVLT-9X2R-P4LQ-ZM92'
-    ];
-    return view('front.success', compact('transaction'));
-})->name('checkout.success');
-
 Route::get('/checkout/failed', function () {
     return view('front.failed');
 })->name('checkout.failed');
 
+Route::get('/checkout/success', function () {
+    return view('front.success');
+})->name('checkout.success');
 
+
+Route::get('/checkout/{id}', [FrontController::class, 'checkout'])->name('checkout');
+
+Route::post('/checkout/{id}', [TransactionController::class, 'process'])->name('checkout.process');
+
+Route::get('/payment/{orderId}', [TransactionController::class, 'payment'])->name('checkout.payment');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');

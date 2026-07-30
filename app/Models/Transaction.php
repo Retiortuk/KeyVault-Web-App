@@ -8,8 +8,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Transaction extends Model
 {
     //
-
     use HasFactory;
+    protected $fillable = [
+        'order_code',
+        'game_id',
+        'game_key_id',
+        'customer_name',
+        'customer_email',
+        'amount',
+        'status',
+        'snap_token',
+    ];
 
     public function game()
     {
