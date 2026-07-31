@@ -83,47 +83,51 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// Fitur ScrollSpy untuk Navbar
 document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelectorAll('.desktop-nav-link');
 
-    window.addEventListener('scroll', () => {
-        let currentSectionId = '';
+    const updateActiveMenu = () => {
+        let currentSectionId = null;
 
-        // Deteksi kita sedang berada di section mana
-        navLinks.forEach(link => {
-            const sectionId = link.getAttribute('href');
-            // Abaikan jika href bukan berupa ID target
-            if (!sectionId.startsWith('#')) return;
+        const isHomePage = window.location.pathname === '/';
 
-            const section = document.querySelector(sectionId);
-            if (section) {
-                const sectionTop = section.offsetTop;
-                // Angka 100 adalah offset/buffer dari tinggi navbar Anda
-                if (window.scrollY >= (sectionTop - 100)) {
-                    currentSectionId = sectionId;
-                }
-            }
-        });
-
-        // Setel default ke menu pertama jika user nge-scroll mentok ke paling atas
-        if (window.scrollY < 50) {
-            currentSectionId = '#featured';
-        }
-
-        // Jalankan pertukaran class CSS (Active vs Inactive)
-        if (currentSectionId) {
+        if (isHomePage) {
             navLinks.forEach(link => {
-                // 1. Reset semua link menjadi abu-abu (Inactive)
-                link.classList.remove('border-purple-600', 'text-purple-700', 'font-bold');
-                link.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-900', 'hover:border-gray-300', 'font-semibold');
+                const url = new URL(link.href);
+                const sectionId = url.hash;
 
-                // 2. Jika link cocok dengan section saat ini, ubah jadi ungu (Active)
-                if (link.getAttribute('href') === currentSectionId) {
-                    link.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-900', 'hover:border-gray-300', 'font-semibold');
-                    link.classList.add('border-purple-600', 'text-purple-700', 'font-bold');
+                if (sectionId) {
+                    const section = document.querySelector(sectionId);
+                    if (section) {
+                        const sectionTop = section.getBoundingClientRect().top;
+
+                        if (sectionTop <= 150) {
+                            currentSectionId = sectionId;
+                        }
+                    }
                 }
             });
+
+            if (window.scrollY < 50) {
+                currentSectionId = '#featured';
+            }
         }
-    });
+
+        navLinks.forEach(link => {
+            const url = new URL(link.href);
+            const sectionId = url.hash;
+
+            link.classList.remove('border-purple-600', 'text-purple-700', 'font-bold');
+            link.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-900', 'hover:border-gray-300', 'font-semibold');
+
+            if (isHomePage && currentSectionId === sectionId) {
+                link.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-900', 'hover:border-gray-300', 'font-semibold');
+                link.classList.add('border-purple-600', 'text-purple-700', 'font-bold');
+            }
+        });
+    };
+
+    window.addEventListener('scroll', updateActiveMenu);
+
+    updateActiveMenu();
 });
