@@ -31,7 +31,10 @@
             </div>
         </div>
 
-        <button id="pay-button" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 rounded-xl transition-all shadow-md shadow-purple-600/30 hidden">
+        <button
+            id="pay-button"
+            class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 rounded-xl transition-all shadow-md shadow-purple-600/30"
+        >
             Re-open Payment Pop-up
         </button>
     </div>
@@ -48,27 +51,22 @@
         function triggerPayment() {
             window.snap.pay(snapToken, {
                 onSuccess: function(result) {
-                    // Redirect jika pembayaran sukses (validasi aslinya tetap di Webhook)
                     window.location.href = "{{ route('checkout.success', $transaction->order_code) }}";
                 },
                 onPending: function(result) {
                     alert("Awaiting your payment. Please complete the transaction.");
                 },
                 onError: function(result) {
-                    // Redirect jika pembayaran gagal
                     window.location.href = "{{ route('checkout.failed') }}";
                 },
                 onClose: function() {
-                    // Jika popup di-close oleh user, tampilkan tombol re-open
                     payButton.classList.remove('hidden');
                 }
             });
         }
 
-        // Jalankan pop-up secara otomatis saat halaman dimuat
         triggerPayment();
 
-        // Fitur klik tombol jika user tidak sengaja menutup pop-up
         payButton.addEventListener('click', function () {
             triggerPayment();
         });

@@ -93,30 +93,58 @@ class TransactionController extends Controller
         return view('front.payment', compact('transaction'));
     }
 
+    // Callback function to handle Midtrans notifications
+    public function callback(Request $request)
+    {
+        $serverKey = config('midtrans.server_key');
+
+        $hashed = hash("sha512", $request->order_id . $request->status_code . $request->gross_amount . $serverKey);
+
+        if ($hashed !== $request->signature_key) {
+            return response()->json(['message' => 'Invalid signature'], 403);
+        }
+
+        $transaction = \App\Models\Transaction::where('order_code', $request->order_id)->first();
+        if (!$transaction) {
+            return response()->json(['message' => 'Transaction not found'], 404);
+        }
+
+        $transactionStatus = $request->transaction_status;
+        $fraudStatus = $request->fraud_status;
+
+        if ($transactionStatus == 'capture' || $transactionStatus == 'settlement') {
+            if ($fraudStatus == 'accept' || $fraudStatus == null) {
+
+                if ($transaction->status === 'pending') {
+                    $gameKey = \App\Models\GameKey::where('game_id', $transaction->game_id)
+                                                    ->where('is_used', false)
+                                                    ->first();
+
+                    if ($gameKey) {
+                        $transaction->update([
+                            'status'      => 'success',
+                            'game_key_id' => $gameKey->id
+                        ]);
+                        $gameKey->update(['is_used' => true]);
+                    } else {
+                        $transaction->update(['status' => 'success_no_key']);
+                    }
+                }
+            }
+        } else if ($transactionStatus == 'cancel' || $transactionStatus == 'deny' || $transactionStatus == 'expire') {
+            if ($transaction->status === 'pending') {
+                $transaction->update(['status' => 'failed']);
+            }
+        } else if ($transactionStatus == 'pending') {
+            $transaction->update(['status' => 'pending']);
+        }
+
+        return response()->json(['message' => 'Callback success']);
+    }
+
     public function success($orderCode)
     {
         $transaction = Transaction::with('gameKey')->where('order_code', $orderCode)->firstOrFail();
-
-        if($transaction->status === 'pending') {
-
-            $gameKey = \App\Models\GameKey::where('game_id', $transaction->game_id)
-                ->where('is_used', false)
-                ->first();
-
-            if($gameKey) {
-                $transaction->update([
-                    'status' => 'success',
-                    'game_key_id' => $gameKey->id,
-                ]);
-
-                $gameKey->update([
-                    'is_used' => true,
-                ]);
-
-                $transaction->load('gameKey');
-
-            }
-        }
 
         return view('front.success', compact('transaction'));
     }

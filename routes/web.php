@@ -24,6 +24,8 @@ Route::post('/checkout/{id}', [TransactionController::class, 'process'])->name('
 
 Route::get('/payment/{orderId}', [TransactionController::class, 'payment'])->name('checkout.payment');
 
+Route::post('/midtrans/callback', [TransactionController::class, 'callback'])->name('midtrans.callback');
+
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);

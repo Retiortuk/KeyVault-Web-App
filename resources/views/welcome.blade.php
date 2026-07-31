@@ -12,7 +12,7 @@
             <p class="text-gray-600 text-base md:text-lg font-medium">Explore our wide range of digital games available for purchase.</p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             @forelse($games as $game)
                 <x-front.game-card
                     id="{{ $game->id }}"

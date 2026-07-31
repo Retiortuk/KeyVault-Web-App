@@ -14,7 +14,6 @@
     <!-- Card Container -->
     <div class="bg-white p-8 md:p-12 rounded-[2rem] shadow-xl shadow-gray-200/50 border border-gray-100 max-w-lg w-full text-center relative overflow-hidden">
 
-        <!-- Efek Glow di belakang Checkmark (Opsional untuk estetika) -->
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-40 bg-green-400/20 blur-3xl rounded-full"></div>
 
         <!-- Success Checkmark Icon -->
