@@ -82,3 +82,52 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const navLinks = document.querySelectorAll('.desktop-nav-link');
+
+    const updateActiveMenu = () => {
+        let currentSectionId = null;
+
+        const isHomePage = window.location.pathname === '/';
+
+        if (isHomePage) {
+            navLinks.forEach(link => {
+                const url = new URL(link.href);
+                const sectionId = url.hash;
+
+                if (sectionId) {
+                    const section = document.querySelector(sectionId);
+                    if (section) {
+                        const sectionTop = section.getBoundingClientRect().top;
+
+                        if (sectionTop <= 150) {
+                            currentSectionId = sectionId;
+                        }
+                    }
+                }
+            });
+
+            if (window.scrollY < 50) {
+                currentSectionId = '#featured';
+            }
+        }
+
+        navLinks.forEach(link => {
+            const url = new URL(link.href);
+            const sectionId = url.hash;
+
+            link.classList.remove('border-purple-600', 'text-purple-700', 'font-bold');
+            link.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-900', 'hover:border-gray-300', 'font-semibold');
+
+            if (isHomePage && currentSectionId === sectionId) {
+                link.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-900', 'hover:border-gray-300', 'font-semibold');
+                link.classList.add('border-purple-600', 'text-purple-700', 'font-bold');
+            }
+        });
+    };
+
+    window.addEventListener('scroll', updateActiveMenu);
+
+    updateActiveMenu();
+});

@@ -9,17 +9,16 @@
 
             <!-- Desktop Menu -->
             <div class="hidden md:flex space-x-10 h-full">
-                <!-- Aktif (Featured) -->
-                <a href="#" class="inline-flex items-center px-1 border-b-2 border-purple-600 text-sm font-bold text-purple-700 h-full">
+                <a href="{{ request()->is('/') ? '#featured' : url('/#featured') }}" class="desktop-nav-link inline-flex items-center px-1 border-b-2 border-transparent text-sm font-semibold text-gray-500 hover:text-gray-900 hover:border-gray-300 h-full transition-colors">
                     Featured
                 </a>
-                <a href="#catalogue" class="inline-flex items-center px-1 border-b-2 border-transparent text-sm font-semibold text-gray-500 hover:text-gray-900 hover:border-gray-300 h-full transition-colors">
+                <a href="{{ request()->is('/') ? '#catalogue' : url('/#catalogue') }}" class="desktop-nav-link inline-flex items-center px-1 border-b-2 border-transparent text-sm font-semibold text-gray-500 hover:text-gray-900 hover:border-gray-300 h-full transition-colors">
                     Catalogue
                 </a>
-                <a href="#how-it-works" class="inline-flex items-center px-1 border-b-2 border-transparent text-sm font-semibold text-gray-500 hover:text-gray-900 hover:border-gray-300 h-full transition-colors">
+                <a href="{{ request()->is('/') ? '#how-it-works' : url('/#how-it-works') }}" class="desktop-nav-link inline-flex items-center px-1 border-b-2 border-transparent text-sm font-semibold text-gray-500 hover:text-gray-900 hover:border-gray-300 h-full transition-colors">
                     How it Works?
                 </a>
-                <a href="#support" class="inline-flex items-center px-1 border-b-2 border-transparent text-sm font-semibold text-gray-500 hover:text-gray-900 hover:border-gray-300 h-full transition-colors">
+                <a href="{{ request()->is('/') ? '#support' : url('/#support') }}" class="desktop-nav-link inline-flex items-center px-1 border-b-2 border-transparent text-sm font-semibold text-gray-500 hover:text-gray-900 hover:border-gray-300 h-full transition-colors">
                     Support
                 </a>
             </div>
@@ -35,7 +34,7 @@
     <!-- Mobile Menu Dropdown -->
     <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white">
         <div class="px-4 pt-2 pb-4 space-y-1 shadow-lg">
-            <a href="#" class="block px-3 py-2.5 rounded-xl text-base font-bold text-purple-700 bg-purple-50">Featured</a>
+            <a href="#featured" class="block px-3 py-2.5 rounded-xl text-base font-bold text-purple-700 bg-purple-50">Featured</a>
             <a href="#catalogue" class="block px-3 py-2.5 rounded-xl text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors">Catalogue</a>
             <a href="#how-it-works" class="block px-3 py-2.5 rounded-xl text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors">How it Works</a>
             <a href="#support" class="block px-3 py-2.5 rounded-xl text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors">Support</a>

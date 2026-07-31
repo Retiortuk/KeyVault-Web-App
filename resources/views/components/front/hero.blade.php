@@ -1,4 +1,4 @@
-<div class="relative w-full bg-gray-900 overflow-hidden">
+<div id="featured" class="relative w-full bg-gray-900 overflow-hidden">
     <img src="https://cdn2.steamgriddb.com/hero/78ca117852cadc43f9f3d00af3001701.jpg" alt="Cyberpunk City" class="absolute inset-0 w-full h-full object-cover ">
 
     <div class="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/70 to-transparent"></div>

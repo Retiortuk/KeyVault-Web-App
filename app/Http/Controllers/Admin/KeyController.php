@@ -11,18 +11,22 @@ class KeyController extends Controller
 {
     public function index()
     {
-        $gamesWithKeys = Game::whereHas('keys')
-            ->withCount([
-                'keys as total_keys',
-                'keys as available_keys' => function ($query) {
-                    $query->where('is_used', false);
-                }
-            ])
-            ->with(['keys' => function ($query) {
-                $query->latest();
-            }])
-            ->latest()
-            ->paginate(10);
+        $gamesWithKeys = Game::whereHas('keys', function($query) {
+            $query->where('is_used', false);
+        })
+        ->withCount([
+            'keys as total_keys' => function ($query) {
+                $query->where('is_used', false);
+            },
+            'keys as available_keys' => function ($query) {
+                $query->where('is_used', false);
+            }
+        ])
+        ->with(['keys' => function ($query) {
+            $query->where('is_used', false)->latest();
+        }])
+        ->latest()
+        ->paginate(10);
 
         $allGames = Game::select('id', 'title')->orderBy('title')->get();
 
@@ -55,8 +59,21 @@ class KeyController extends Controller
         }
 
         if (count($insertData) > 0) {
+            $insertedCount = 0;
             foreach (array_chunk($insertData, 500) as $chunk) {
-                GameKey::insert($chunk);
+                $insertedCount += GameKey::insertOrIgnore($chunk);
+            }
+
+            if ($insertedCount === 0) {
+                return redirect()
+                    ->back()
+                    ->with('error', 'Gagal menambahkan! Semua License Key tersebut sudah ada di database.');
+            }
+            elseif ($insertedCount < count($insertData)) {
+                $duplicateCount = count($insertData) - $insertedCount;
+                return redirect()
+                    ->route('admin.keys.index')
+                    ->with('success', "{$insertedCount} Key berhasil ditambahkan. ({$duplicateCount} Key diabaikan karena duplikat).");
             }
 
             return redirect()->route('admin.keys.index')->with('success', count($insertData) . ' License Keys successfully added!');
