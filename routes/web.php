@@ -47,7 +47,5 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     Route::resource('keys', KeyController::class)->only(['index', 'store', 'destroy']);
 
-    Route::get('/transactions', function () {
-        return view('admin.transactions.index');
-    })->name('transactions.index');
+    Route::get('transactions', [TransactionController::class, 'index'])->name('transactions.index');
 });

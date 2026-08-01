@@ -10,12 +10,6 @@
 
 <!-- Main Table Card -->
 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-    <div class="p-5 border-b border-gray-100 bg-gray-50/30">
-        <button class="flex items-center gap-2 border border-gray-300 bg-white rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors shadow-sm">
-            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
-            Filter
-        </button>
-    </div>
 
     <!-- Table -->
     <div class="overflow-x-auto">
@@ -30,106 +24,84 @@
                     <th class="px-6 py-4 text-center">Status</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-100">
-                <!-- SUCCESS ROW -->
+            <tbody class="divide-y divide-gray-100 text-sm">
+                @forelse($transactions as $transaction)
                 <tr class="hover:bg-gray-50/50 transition-colors">
-                    <td class="px-6 py-4 font-bold text-gray-900">#ORD-001</td>
-                    <td class="px-6 py-4">alex.mercer@example.com</td>
-                    <td class="px-6 py-4 font-medium text-gray-900 flex items-center gap-3">
-                        <div class="w-8 h-8 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center border border-purple-100">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </div>
-                        Cyberpunk 2077
-                    </td>
-                    <td class="px-6 py-4 font-mono font-medium text-gray-600">A1B2-C3D4-E5F6</td>
-                    <td class="px-6 py-4 font-mono font-semibold text-gray-900 text-right">$59.99</td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="bg-green-100 text-green-700 px-3 py-1.5 rounded-md text-[11px] font-bold uppercase tracking-wider">Success</span>
-                    </td>
-                </tr>
 
-                <!-- PENDING ROW -->
-                <tr class="hover:bg-gray-50/50 transition-colors">
-                    <td class="px-6 py-4 font-bold text-gray-900">#ORD-002</td>
-                    <td class="px-6 py-4">sarah.connor@example.com</td>
-                    <td class="px-6 py-4 font-medium text-gray-900 flex items-center gap-3">
-                        <div class="w-8 h-8 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center border border-purple-100">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </div>
-                        Elden Ring
+                    <!-- Date & Order ID -->
+                    <td class="p-4">
+                        <div class="font-bold text-gray-900">{{ $transaction->order_code }}</div>
+                        <div class="text-xs text-gray-500">{{ $transaction->created_at->format('d M Y, H:i') }}</div>
                     </td>
-                    <td class="px-6 py-4 font-mono text-gray-400 text-sm">PENDING_ALLOC</td>
-                    <td class="px-6 py-4 font-mono font-semibold text-gray-900 text-right">$49.99</td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="bg-yellow-100 text-yellow-700 px-3 py-1.5 rounded-md text-[11px] font-bold uppercase tracking-wider">Pending</span>
-                    </td>
-                </tr>
 
-                <!-- FAILED ROW -->
-                <tr class="hover:bg-gray-50/50 transition-colors bg-red-50/20">
-                    <td class="px-6 py-4 font-bold text-gray-900">#ORD-003</td>
-                    <td class="px-6 py-4">t.stark@starkindustries.com</td>
-                    <td class="px-6 py-4 font-medium text-gray-900 flex items-center gap-3">
-                        <div class="w-8 h-8 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center border border-purple-100">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </div>
-                        Starfield
+                    <!-- Customer -->
+                    <td class="p-4">
+                        <div class="font-semibold text-gray-900">{{ $transaction->customer_name }}</div>
+                        <div class="text-xs text-gray-500">{{ $transaction->customer_email }}</div>
                     </td>
-                    <td class="px-6 py-4 font-mono text-gray-400 text-sm">PAYMENT_DECLINED</td>
-                    <td class="px-6 py-4 font-mono font-semibold text-gray-900 text-right">$69.99</td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="bg-red-100 text-red-700 px-3 py-1.5 rounded-md text-[11px] font-bold uppercase tracking-wider">Failed</span>
-                    </td>
-                </tr>
 
-                <!-- SUCCESS ROW -->
-                <tr class="hover:bg-gray-50/50 transition-colors">
-                    <td class="px-6 py-4 font-bold text-gray-900">#ORD-004</td>
-                    <td class="px-6 py-4">b.wayne@wayneent.com</td>
-                    <td class="px-6 py-4 font-medium text-gray-900 flex items-center gap-3">
-                        <div class="w-8 h-8 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center border border-purple-100">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </div>
-                        Batman: Arkham Knight
+                    <!-- Game -->
+                    <td class="p-4">
+                        <span class="font-semibold text-gray-800">{{ $transaction->game->title }}</span>
                     </td>
-                    <td class="px-6 py-4 font-mono font-medium text-gray-600">G7H8-I9J0-K1L2</td>
-                    <td class="px-6 py-4 font-mono font-semibold text-gray-900 text-right">$19.99</td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="bg-green-100 text-green-700 px-3 py-1.5 rounded-md text-[11px] font-bold uppercase tracking-wider">Success</span>
-                    </td>
-                </tr>
 
-                <!-- SUCCESS ROW -->
-                <tr class="hover:bg-gray-50/50 transition-colors">
-                    <td class="px-6 py-4 font-bold text-gray-900">#ORD-005</td>
-                    <td class="px-6 py-4">clark.k@dailyplanet.com</td>
-                    <td class="px-6 py-4 font-medium text-gray-900 flex items-center gap-3">
-                        <div class="w-8 h-8 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center border border-purple-100">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </div>
-                        Injustice 2
+                    <!-- License Key -->
+                    <td class="p-4">
+                        @if($transaction->gameKey)
+                            <code class="px-2 py-1 bg-gray-100 text-gray-800 rounded text-xs font-mono border border-gray-200">
+                                {{ $transaction->gameKey->license_key }}
+                            </code>
+                        @else
+                            <span class="text-gray-400 italic text-xs">Waiting / None</span>
+                        @endif
                     </td>
-                    <td class="px-6 py-4 font-mono font-medium text-gray-600">M3N4-O5P6-Q7R8</td>
-                    <td class="px-6 py-4 font-mono font-semibold text-gray-900 text-right">$29.99</td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="bg-green-100 text-green-700 px-3 py-1.5 rounded-md text-[11px] font-bold uppercase tracking-wider">Success</span>
+
+                    <!-- Amount -->
+                    <td class="p-4 font-bold text-gray-900">
+                        Rp {{ number_format($transaction->amount, 0, ',', '.') }}
+                    </td>
+
+                    <!-- Status -->
+                    <td class="p-4">
+                        @if($transaction->status === 'success')
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700">
+                                SUCCESS
+                            </span>
+                        @elseif($transaction->status === 'pending')
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-yellow-100 text-yellow-700">
+                                PENDING
+                            </span>
+                        @elseif($transaction->status === 'failed')
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-red-100 text-red-700">
+                                FAILED
+                            </span>
+                        @elseif($transaction->status === 'success_no_key')
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-orange-100 text-orange-700">
+                                PAID - NO KEY
+                            </span>
+                        @else
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-700">
+                                {{ strtoupper($transaction->status) }}
+                            </span>
+                        @endif
                     </td>
                 </tr>
+                @empty
+                <tr>
+                    <td colspan="6" class="p-8 text-center text-gray-400">
+                        No transactions found.
+                    </td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
 
     <!-- Pagination -->
-    <div class="px-6 py-4 border-t border-gray-100 bg-gray-50/30 flex justify-between items-center">
-        <p class="text-sm text-gray-500 font-medium">Showing 1 to 5 of 2,341 entries</p>
-        <div class="flex gap-1">
-            <button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-400 bg-white cursor-not-allowed">&lt;</button>
-            <button class="w-8 h-8 flex items-center justify-center rounded-lg bg-purple-600 text-white font-medium text-sm shadow-md shadow-purple-200">1</button>
-            <button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 font-medium text-sm transition-colors">2</button>
-            <button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 font-medium text-sm transition-colors">3</button>
-            <span class="w-8 h-8 flex items-center justify-center text-gray-400 text-sm">...</span>
-            <button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 transition-colors">&gt;</button>
+    @if($transactions->hasPages())
+        <div class="p-4 border-t border-gray-100">
+            {{ $transactions->links() }}
         </div>
-    </div>
+    @endif
 </div>
 @endsection

@@ -12,6 +12,15 @@ use Midtrans\Snap;
 class TransactionController extends Controller
 {
     //
+
+    public function index()
+    {
+        $transactions = Transaction::with(['game', 'gameKey'])
+            ->latest()
+            ->paginate(10);
+        return view('admin.transactions.index', compact('transactions'));
+    }
+
     public function __construct()
     {
         Config::$serverKey = config('midtrans.server_key');
