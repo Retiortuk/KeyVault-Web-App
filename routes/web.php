@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\KeyController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\Admin\DashboardController;
 
 Route::get('/',[FrontController::class, 'index'])->name('home');
 
@@ -39,9 +40,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 // Admin Side
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('games', GameController::class)->except(['create', 'show', 'edit']);
 
